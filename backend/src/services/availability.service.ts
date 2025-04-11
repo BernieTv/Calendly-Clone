@@ -95,7 +95,11 @@ export const getAvailabilityForPublicEventService = async (eventId: string) => {
 
   const daysOfWeek = Object.values(DayOfWeekEnum);
 
-  const availableDays = [];
+  const availableDays: {
+    day: DayOfWeekEnum;
+    slots: string[];
+    isAvailable: boolean;
+  }[] = [];
 
   for (const dayOfWeek of daysOfWeek) {
     const nextDate = getNextDateForDay(dayOfWeek);
@@ -160,7 +164,7 @@ function generateAvailableTimeSlots(
   dateStr: string,
   timeGap: number = 30,
 ) {
-  const slots = [];
+  const slots: string[] = [];
 
   let slotStartTime = parseISO(
     `${dateStr}T${startTime.toISOString().slice(11, 16)}`,
